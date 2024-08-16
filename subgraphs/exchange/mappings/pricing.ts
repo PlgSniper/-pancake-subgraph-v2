@@ -54,21 +54,25 @@ export function findBnbPerToken(token: Token): BigDecimal {
   }
   // loop through whitelist and check if paired with any
   for (let i = 0; i < WHITELIST.length; ++i) {
-    let pairAddress = factoryContract.getPair(Address.fromString(token.id), Address.fromString(WHITELIST[i]));
-    if (pairAddress.toHex() != ADDRESS_ZERO) {
-      let pair = Pair.load(pairAddress.toHex());
-      if (pair.token0 == token.id && pair.reserveBNB.gt(MINIMUM_LIQUIDITY_THRESHOLD_BNB)) {
-        let token1 = Token.load(pair.token1);
-        return pair.token1Price.times(token1.derivedBNB as BigDecimal); // return token1 per our token * BNB per token 1
-      }
-      if (pair.token1 == token.id && pair.reserveBNB.gt(MINIMUM_LIQUIDITY_THRESHOLD_BNB)) {
-        let token0 = Token.load(pair.token0);
-        return pair.token0Price.times(token0.derivedBNB as BigDecimal); // return token0 per our token * BNB per token 0
+    let pairAddressResult = factoryContract.try_getPair(Address.fromString(token.id), Address.fromString(WHITELIST[i]));
+    if (!pairAddressResult.reverted) {
+      let pairAddress = pairAddressResult.value;
+      if (pairAddress.toHex() != ADDRESS_ZERO) {
+        let pair = Pair.load(pairAddress.toHex());
+        if (pair.token0 == token.id && pair.reserveBNB.gt(MINIMUM_LIQUIDITY_THRESHOLD_BNB)) {
+          let token1 = Token.load(pair.token1);
+          return pair.token1Price.times(token1.derivedBNB as BigDecimal); // return token1 per our token * BNB per token 1
+        }
+        if (pair.token1 == token.id && pair.reserveBNB.gt(MINIMUM_LIQUIDITY_THRESHOLD_BNB)) {
+          let token0 = Token.load(pair.token0);
+          return pair.token0Price.times(token0.derivedBNB as BigDecimal); // return token0 per our token * BNB per token 0
+        }
       }
     }
   }
   return ZERO_BD; // nothing was found return 0
 }
+
 
 /**
  * Accepts tokens and amounts, return tracked amount based on token whitelist
