@@ -8,7 +8,7 @@
   "scripts": {
     "codegen": "graph codegen subgraph.yaml",
     "build": "graph build subgraph.yaml",
-    "deploy": "graph deploy --product hosted-service --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ pancakeswap/exchange subgraph.yaml",
+    "deploy": "graph deploy --studio pancake-subgraph-v2-bsc",
     "create-local": "graph create pancakeswap/exchange-v2 --node http://127.0.0.1:8020",
     "deploy-local": "graph deploy pancakeswap/exchange-v2 --debug --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
     "remove-local": "graph remove pancakeswap/exchange-v2 --node http://127.0.0.1:8020",
