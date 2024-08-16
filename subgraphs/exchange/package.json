@@ -11,6 +11,8 @@
     "deploy": "graph deploy --product hosted-service --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ pancakeswap/exchange subgraph.yaml",
     "create-local": "graph create pancakeswap/exchange-v2 --node http://127.0.0.1:8020",
     "deploy-local": "graph deploy pancakeswap/exchange-v2 --debug --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
-    "remove-local": "graph remove pancakeswap/exchange-v2 --node http://127.0.0.1:8020"
+    "remove-local": "graph remove pancakeswap/exchange-v2 --node http://127.0.0.1:8020",
+    "remove-tmp1-local": "graph remove --node http://128.0.0.1:8020 QmPbWqCCnUxcDhe6ANcMGbn1QjVKHrEdbaKVDBV3c3btNc",
+    "remove-tmp2-local": "graph remove --node http://128.0.0.1:8020 QmfGuiGdHVCbSf8TsVBcjTSn93udHVuwy1EFGyLKEfJ6ty"
   }
 }
